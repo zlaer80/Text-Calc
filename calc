@@ -1,5 +1,17 @@
+import javax.print.PrintException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
+
+
 public class Main {
+    private static Pattern pattern = Pattern.compile("-?\\d+(\\.\\d+)?");
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        return pattern.matcher(strNum).matches();
+    }
     public static void main(String[] args) throws Exception
     {
         System.out.println("Введите выражение");
@@ -28,6 +40,10 @@ public class Main {
         }
 
         for (int i = 0; i < data.length; i++) {
+            if (isNumeric( data[i]) && Integer.valueOf(data[i])>10){
+
+                throw new Exception("Введено число больше 10 ");
+            }
             data[i] = data[i].replace("\"", "");}
 
 
@@ -68,7 +84,9 @@ public class Main {
 
     }
     static void printInQuotes(String text){
+        if (text.length()<40)
         System.out.println("\""+text+"\"");
-
+        if (text.length()>40)
+            System.out.println("\""+text.substring(0,40)+"..."+ "\"");
     }
 }
